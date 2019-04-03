@@ -1,0 +1,17 @@
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/Dto/HolderDto.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/controllers/BorrowController.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/Dto/BorrowDto.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/common/JsonParserHelper.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/Application.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/repositories/BorrowRepository.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/models/Book.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/models/Borrow.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/services/BookService.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/repositories/BookRepository.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/repositories/HolderRepository.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/controllers/BookController.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/models/Holder.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/controllers/HolderController.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/services/HolderService.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/services/BorrowService.java
+/Users/alexpench/Downloads/JavaCodeReview/customer/src/main/java/com/customer/java/Dto/BookDto.java
