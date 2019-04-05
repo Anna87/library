@@ -42,13 +42,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.data</groupId>-->
-            <!--<artifactId>spring-data-releasetrain</artifactId>-->
-            <!--<version>Lovelace-SR5</version>-->
-            <!--<scope>import</scope>-->
-            <!--<type>pom</type>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -64,17 +57,17 @@
             <artifactId>guava</artifactId>
             <version>r05</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>4.0.5.RELEASE</version>
+        </dependency>
     </dependencies>
-        <!--<repositories>-->
-            <!--<repository>-->
-                <!--<id>spring-milestones</id>-->
-                <!--<name>Spring Milestones</name>-->
-                <!--<url>https://repo.spring.io/milestone</url>-->
-                <!--<snapshots>-->
-                    <!--<enabled>false</enabled>-->
-                <!--</snapshots>-->
-            <!--</repository>-->
-        <!--</repositories>-->
     <build>
         <plugins>
             <plugin>
