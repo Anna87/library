@@ -1,0 +1,9 @@
+<changelist name="Default10" date="1556139912410" recycled="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Default10/shelved.patch" />
+  <option name="DESCRIPTION" value="Default" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+</changelist>

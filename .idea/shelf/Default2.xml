@@ -1,0 +1,9 @@
+<changelist name="Default2" date="1556139881930" recycled="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Default2/shelved.patch" />
+  <option name="DESCRIPTION" value="Default" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/models/Book$BookBuilder.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/models/Book$BookBuilder.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Book$BookBuilder.class" />
+  </binary>
+</changelist>

@@ -10,4 +10,5 @@ public class HolderDto {
     String id;
     String firstName;
     String lastName;
+    String email;
 }

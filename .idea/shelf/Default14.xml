@@ -1,0 +1,99 @@
+<changelist name="Default14" date="1556139958071" recycled="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Default14/shelved.patch" />
+  <option name="DESCRIPTION" value="Default" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/Dto/BookDto.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/Dto/BookDto.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BookDto.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/repositories/HolderRepository.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/repositories/HolderRepository.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/HolderRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/Dto/BorrowDto.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/Dto/BorrowDto.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BorrowDto.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/repositories/BookRepository.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/repositories/BookRepository.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BookRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/models/Borrow.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/models/Borrow.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Borrow.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/config/SenderConfig.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/config/SenderConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/SenderConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/controllers/BorrowController.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/controllers/BorrowController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BorrowController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/models/Book.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/models/Book.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Book.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/models/Holder.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/models/Holder.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Holder.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/services/BorrowService.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/services/BorrowService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BorrowService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/services/BookService.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/services/BookService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BookService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/Dto/HolderDto.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/Dto/HolderDto.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/HolderDto.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/repositories/BorrowRepository.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/repositories/BorrowRepository.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BorrowRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/services/HolderService.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/services/HolderService.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/HolderService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/Application.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/Application.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Application.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/services/Sender.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/services/Sender.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/Sender.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/controllers/BookController.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/controllers/BookController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BookController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/controllers/HolderController.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/controllers/HolderController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/HolderController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/customer/java/config/WebConfig.class" />
+    <option name="AFTER_PATH" value="target/classes/com/customer/java/config/WebConfig.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/WebConfig.class" />
+  </binary>
+</changelist>

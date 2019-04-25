@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class BorrowDto {
     Holder holder;
     Book[] books;
+    long expiredDate;
 }

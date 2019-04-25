@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Document
@@ -20,5 +21,7 @@ public class Borrow {
 
 //    @OneToMany(mappedBy = "borrow")
     public List<Book> books;
+
+    public Date expiredDate;
 
 }

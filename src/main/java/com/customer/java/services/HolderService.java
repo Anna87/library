@@ -29,7 +29,7 @@ public class HolderService {
     }
 
     private Holder ConvertFromDto(HolderDto dto) {
-        Holder holder = Holder.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).build();
+        Holder holder = Holder.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).email(dto.getEmail()).build();
         if(!Objects.equals(dto.getId(),"")) {
             return holder.toBuilder().id(dto.getId()).build();
         }
@@ -42,6 +42,7 @@ public class HolderService {
         Holder holderForUpdate = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
         holderForUpdate.setFirstName(holder.getFirstName());
         holderForUpdate.setLastName(holder.getLastName());
+        holderForUpdate.setEmail(holder.getEmail());
         Holder savedHolder =  holderRepository.save(holderForUpdate);
         borrowService.updateHolderInBorrow(holderForUpdate);
         return savedHolder;

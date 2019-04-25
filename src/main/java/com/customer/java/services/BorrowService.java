@@ -13,10 +13,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +47,7 @@ public class BorrowService {
     }
 
     private Borrow ConvertFromDto(BorrowDto dto) {
-        return Borrow.builder().books(Lists.newArrayList(dto.getBooks())).holder(dto.getHolder()).build();
+        return Borrow.builder().books(Lists.newArrayList(dto.getBooks())).holder(dto.getHolder()).expiredDate(new Date(dto.getExpiredDate())).build();
     }
 
     private void SetBooksUnavalible(Book[] books){
@@ -122,5 +119,10 @@ public class BorrowService {
         for (Borrow item : borrows) {
             borrowRepository.delete(item);
         }
+    }
+
+    public List<Borrow> getExpiredBorrow(Date date){
+
+        return borrowRepository.findByExpiredDateLessThanEqual(date);
     }
 }

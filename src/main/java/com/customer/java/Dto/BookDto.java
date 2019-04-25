@@ -11,4 +11,6 @@ public class BookDto {
     String title;
     String autor;
     Boolean isAvalible;
+    Boolean hasDigitalFormat;
+    String fileId;
 }

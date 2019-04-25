@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.support.converter.MessageConverter;
+import org.springframework.jms.support.converter.MessageType;
 
 @Configuration
 public class SenderConfig {
@@ -21,9 +24,21 @@ public class SenderConfig {
         return activeMQConnectionFactory;
     }
 
+    @Bean // Serialize message content to json using TextMessage
+    public MessageConverter jacksonJmsMessageConverter() {
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setTargetType(MessageType.TEXT);
+        converter.setTypeIdPropertyName("_type");
+        return converter;
+    }
+
     @Bean
     public JmsTemplate jmsTemplate() {
-        return new JmsTemplate(senderActiveMQConnectionFactory());
+        //return new JmsTemplate(senderActiveMQConnectionFactory());
+        JmsTemplate template = new JmsTemplate();
+        template.setMessageConverter(jacksonJmsMessageConverter());
+        template.setConnectionFactory(senderActiveMQConnectionFactory());
+        return template;
     }
 
     @Bean
