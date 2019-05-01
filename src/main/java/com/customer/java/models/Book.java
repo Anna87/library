@@ -17,4 +17,6 @@ public class Book {
     private String title;
     private String autor;
     private Boolean isAvalible;
+    private Boolean hasDigitalFormat;
+    private String fileId;
 }

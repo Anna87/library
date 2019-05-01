@@ -1,11 +1,13 @@
 package com.customer.java.services;
 
 import com.customer.java.Dto.BookDto;
+import com.customer.java.client.StorageClient;
 import com.customer.java.common.JsonParserHelper;
 import com.customer.java.models.Book;
 import com.customer.java.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -23,12 +25,22 @@ public class BookService {
     @Autowired
     JsonParserHelper jsonParserHelper;
 
+    @Autowired
+    StorageClient storageClient;
+
     public String GetAllBooks(){
         return jsonParserHelper.WriteToStrJson(bookRepository.findAll());
     }
 
-    public Book AddBook(BookDto dto) {
-        return bookRepository.save(this.ConvertFromDto(dto));
+    public Book AddBook(MultipartFile data, String bookProps) {
+        BookDto bookDto = jsonParserHelper.ReadValue(bookProps, BookDto.class);
+        String fileId =  storageClient.addDigitalBook(data,bookDto.getTitle(), bookDto.getAutor());
+        bookDto.setFileId(fileId);
+        return bookRepository.save(this.ConvertFromDto(bookDto));
+    }
+
+    public void DownloadDigitalBook(String fileId){
+        storageClient.downloadDigitalBook(fileId);
     }
 
     public Book editBook(BookDto dto) {
@@ -57,7 +69,8 @@ public class BookService {
     }
 
     private Book ConvertFromDto(BookDto dto) {
-        Book book = Book.builder().title(dto.getTitle()).autor(dto.getAutor()).isAvalible(dto.getIsAvalible()).build();
+        Book book = Book.builder().title(dto.getTitle()).autor(dto.getAutor()).isAvalible(dto.getIsAvalible())
+                .hasDigitalFormat(dto.getHasDigitalFormat()).fileId(dto.getFileId()).build();
         if(!Objects.equals(dto.getId(),"")) {
             return book.toBuilder().id(dto.getId()).build();
         }
