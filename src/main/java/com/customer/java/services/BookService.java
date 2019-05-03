@@ -4,11 +4,14 @@ import com.customer.java.Dto.BookDto;
 import com.customer.java.client.StorageClient;
 import com.customer.java.common.JsonParserHelper;
 import com.customer.java.models.Book;
+import com.customer.java.models.FileData;
 import com.customer.java.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.IOUtils;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -39,8 +42,8 @@ public class BookService {
         return bookRepository.save(this.ConvertFromDto(bookDto));
     }
 
-    public void DownloadDigitalBook(String fileId){
-        storageClient.downloadDigitalBook(fileId);
+    public MultipartFile DownloadDigitalBook(String fileId) throws IOException {
+        return storageClient.downloadDigitalBook(fileId);
     }
 
     public Book editBook(BookDto dto) {
@@ -70,7 +73,8 @@ public class BookService {
 
     private Book ConvertFromDto(BookDto dto) {
         Book book = Book.builder().title(dto.getTitle()).autor(dto.getAutor()).isAvalible(dto.getIsAvalible())
-                .hasDigitalFormat(dto.getHasDigitalFormat()).fileId(dto.getFileId()).build();
+                .hasDigitalFormat(dto.getHasDigitalFormat()).fileId(dto.getFileId()).fileName(dto.getFileName())
+                .build();
         if(!Objects.equals(dto.getId(),"")) {
             return book.toBuilder().id(dto.getId()).build();
         }

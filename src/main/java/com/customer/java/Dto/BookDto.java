@@ -13,4 +13,5 @@ public class BookDto {
     Boolean isAvalible;
     Boolean hasDigitalFormat;
     String fileId;
+    String fileName;
 }

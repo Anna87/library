@@ -19,4 +19,5 @@ public class Book {
     private Boolean isAvalible;
     private Boolean hasDigitalFormat;
     private String fileId;
+    private String fileName;
 }
