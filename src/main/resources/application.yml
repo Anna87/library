@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: book-service
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    ervice-url:
+      default-zone: http://localhost:8761/eureka
