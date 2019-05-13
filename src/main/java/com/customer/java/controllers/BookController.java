@@ -29,6 +29,11 @@ public class BookController {
         return bookService.GetAllBooks();
     }
 
+    @PostMapping("/books")
+    public String books1() {
+        return bookService.GetAllBooks();
+    }
+
     @PostMapping(path = "/addBook")
     public Book newBook(@RequestParam("file") MultipartFile data, @RequestParam("bookProps") String bookProps) {
         return bookService.AddBook(data, bookProps);
