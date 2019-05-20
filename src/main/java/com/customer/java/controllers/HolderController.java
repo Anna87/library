@@ -1,22 +1,20 @@
 package com.customer.java.controllers;
 
-import com.customer.java.Dto.BookDto;
 import com.customer.java.Dto.HolderDto;
-import com.customer.java.models.Book;
 import com.customer.java.models.Holder;
 import com.customer.java.services.HolderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/holder")
 public class HolderController {
 
     @Autowired
     HolderService holderService;
 
+    @Secured(value = "ROLE_ADMIN")
     @GetMapping("/holders")
     public String holders() {
         return holderService.GetAllHolders();

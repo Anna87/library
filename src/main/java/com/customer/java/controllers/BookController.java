@@ -10,12 +10,14 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
     @Autowired
@@ -24,6 +26,7 @@ public class BookController {
     @Autowired
     JsonParserHelper jsonParserHelper;
 
+    @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/books")
     public String books() {
         return bookService.GetAllBooks();
