@@ -5,10 +5,12 @@ import com.customer.java.Dto.HolderDto;
 import com.customer.java.models.Borrow;
 import com.customer.java.services.BorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Secured(value = {"ROLE_ADMIN"})
 @RestController
 @RequestMapping("/borrow")
 public class BorrowController {
@@ -19,7 +21,6 @@ public class BorrowController {
     public String borrows() {
         return borrowService.GetAllBorrow();
     }
-
 
     @PostMapping(path = "/addBorrow")
     public Borrow newBook(@RequestBody BorrowDto borrowDto) {

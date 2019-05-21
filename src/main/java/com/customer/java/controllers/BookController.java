@@ -26,22 +26,18 @@ public class BookController {
     @Autowired
     JsonParserHelper jsonParserHelper;
 
-    @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/books")
     public String books() {
         return bookService.GetAllBooks();
     }
 
-    @PostMapping("/books")
-    public String books1() {
-        return bookService.GetAllBooks();
-    }
-
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/addBook")
     public Book newBook(@RequestParam("file") MultipartFile data, @RequestParam("bookProps") String bookProps) {
         return bookService.AddBook(data, bookProps);
     }
 
+    @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping(path = "/downloadBookFileData")
     public ResponseEntity<Resource> download(@RequestBody String fileId) throws IOException {
         MultipartFile file = bookService.DownloadDigitalBook(fileId);
@@ -51,11 +47,13 @@ public class BookController {
                 .body(new ByteArrayResource(bytes,file.getName()));
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/editBook")
     public Book editBook(@RequestBody BookDto dto) {
         return bookService.editBook(dto);
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/deleteBook")
     public boolean deleteBook(@RequestBody BookDto dto) {
         return bookService.deleteBook(dto);

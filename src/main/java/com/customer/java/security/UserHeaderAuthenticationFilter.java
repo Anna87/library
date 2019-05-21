@@ -1,4 +1,4 @@
-package com.customer.java.config;
+package com.customer.java.security;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -16,8 +16,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 public class UserHeaderAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -29,10 +32,12 @@ public class UserHeaderAuthenticationFilter extends AbstractAuthenticationProces
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        final String username = request.getHeader("sub");
+        final String username = request.getHeader("username");
 
-        final List<String> authorities =
-                Lists.newArrayList(Splitter.on(", ").split(request.getHeader("authorities")));
+        final String requestAuthorities = request.getHeader("authorities");
+        final List<String> authorities = nonNull(requestAuthorities)
+                ? Lists.newArrayList(Splitter.on(", ").split(requestAuthorities))
+                : Collections.EMPTY_LIST;
 
         final List<SimpleGrantedAuthority> roles = authorities.stream()
                 .map(SimpleGrantedAuthority::new)

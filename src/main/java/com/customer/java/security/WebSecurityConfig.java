@@ -1,4 +1,4 @@
-package com.customer.java.config;
+package com.customer.java.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/**").authenticated()
+                //.antMatchers(HttpMethod.GET, "/library/book/books").permitAll()
                 .and()
                 .addFilterBefore(userHeaderAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

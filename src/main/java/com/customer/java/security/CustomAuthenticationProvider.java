@@ -1,4 +1,4 @@
-package com.customer.java.config;
+package com.customer.java.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,8 +13,7 @@ public class CustomAuthenticationProvider
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
-        return new UsernamePasswordAuthenticationToken(
-                authentication.getName(), null, authentication.getAuthorities());
+        return authentication;
     }
 
     @Override

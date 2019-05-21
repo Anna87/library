@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+@Secured(value = {"ROLE_ADMIN"})
 @RestController
 @RequestMapping("/holder")
 public class HolderController {
@@ -14,7 +15,6 @@ public class HolderController {
     @Autowired
     HolderService holderService;
 
-    @Secured(value = "ROLE_ADMIN")
     @GetMapping("/holders")
     public String holders() {
         return holderService.GetAllHolders();
