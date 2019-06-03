@@ -3,6 +3,4 @@
 .idea/*
 
 customer.iml
-target/classes/com/library/
-target/generated-sources/
-target/maven-status/
+target/*
