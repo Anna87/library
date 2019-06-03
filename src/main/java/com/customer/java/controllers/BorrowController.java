@@ -19,12 +19,12 @@ public class BorrowController {
 
     @GetMapping("/borrows")
     public String borrows() {
-        return borrowService.GetAllBorrow();
+        return borrowService.getAllBorrow();
     }
 
     @PostMapping(path = "/addBorrow")
     public Borrow newBook(@RequestBody BorrowDto borrowDto) {
-        return borrowService.AddBorrow(borrowDto);
+        return borrowService.addBorrow(borrowDto);
     }
 
     @PostMapping("/borrowsByHolder")

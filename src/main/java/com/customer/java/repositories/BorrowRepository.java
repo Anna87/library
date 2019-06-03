@@ -10,11 +10,10 @@ import java.util.List;
 
 @Repository
 public interface BorrowRepository extends MongoRepository<Borrow, String> {
+
     List<Borrow> findByHolder(Holder holder);
 
     List<Borrow> findByBooksIdIn(String id);
-
-    //List<Borrow> findByExpiredDateBefore(Date date);
 
     List<Borrow> findByExpiredDateLessThanEqual(Date date);
 }

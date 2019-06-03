@@ -28,19 +28,19 @@ public class BookController {
 
     @GetMapping("/books")
     public String books() {
-        return bookService.GetAllBooks();
+        return bookService.getAllBooks();
     }
 
     @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/addBook")
-    public Book newBook(@RequestParam("file") MultipartFile data, @RequestParam("bookProps") String bookProps) {
+    public Book newBook(@RequestParam(value = "file", required = false) MultipartFile data, @RequestParam("bookProps") String bookProps) {
         return bookService.AddBook(data, bookProps);
     }
 
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping(path = "/downloadBookFileData")
     public ResponseEntity<Resource> download(@RequestBody String fileId) throws IOException {
-        MultipartFile file = bookService.DownloadDigitalBook(fileId);
+        MultipartFile file = bookService.downloadDigitalBook(fileId);
         byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType()))

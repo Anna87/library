@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class BorrowService {
-    private final String HOLDERNOTFOUND = "Holder not found";
-
     @Autowired
     BorrowRepository borrowRepository;
     @Autowired
@@ -29,16 +27,16 @@ public class BorrowService {
     @Autowired
     JsonParserHelper jsonParserHelper;
 
-    public Borrow AddBorrow(BorrowDto borrowDto) {
-        Borrow borrow = borrowRepository.save(this.ConvertFromDto(borrowDto));
+    public Borrow addBorrow(BorrowDto borrowDto) {
+        Borrow borrow = borrowRepository.save(this.convertFromDto(borrowDto));
 
-        this.SetBooksUnavalible(borrowDto.getBooks());
+        this.setBooksUnavalible(borrowDto.getBooks());
 
         return borrow;
     }
 
-    public String GetAllBorrow() {
-        return jsonParserHelper.WriteToStrJson(borrowRepository.findAll());
+    public String getAllBorrow() {
+        return jsonParserHelper.writeToStrJson(borrowRepository.findAll());
     }
 
     public List<Borrow> findByHolder(HolderDto dto){
@@ -46,11 +44,11 @@ public class BorrowService {
         return borrowRepository.findByHolder(holder);
     }
 
-    private Borrow ConvertFromDto(BorrowDto dto) {
+    private Borrow convertFromDto(BorrowDto dto) {
         return Borrow.builder().books(Lists.newArrayList(dto.getBooks())).holder(dto.getHolder()).expiredDate(new Date(dto.getExpiredDate())).build();
     }
 
-    private void SetBooksUnavalible(Book[] books){
+    private void setBooksUnavalible(Book[] books){
         Iterable<String> ids = Arrays.stream(books).map(s -> s.getId()).collect(Collectors.toList());
         Iterable<Book> foundBooks = bookRepository.findAllById(ids);
         for (Book item : foundBooks) {

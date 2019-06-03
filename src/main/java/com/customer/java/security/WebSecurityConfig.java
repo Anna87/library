@@ -35,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/**").authenticated()
-                //.antMatchers(HttpMethod.GET, "/library/book/books").permitAll()
                 .and()
                 .addFilterBefore(userHeaderAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -58,7 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setCharacterEncoding("UTF-8");
                     response.getWriter().write(json);
                     response.addHeader("access-control-allow-origin","*");
-                    response.setHeader("access-control-allow-origin","*");
                 });
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;

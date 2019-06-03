@@ -9,7 +9,7 @@ import java.io.IOException;
 @Service
 public class JsonParserHelper {
 
-    public String WriteToStrJson(Object object){
+    public String writeToStrJson(Object object){
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
         try {
@@ -20,7 +20,7 @@ public class JsonParserHelper {
         return json;
     }
 
-    public <T> T ReadValue(String str, Class<T> valueType){
+    public <T> T readValue(String str, Class<T> valueType){
         ObjectMapper objectMapper = new ObjectMapper();
         T obj = null;
         try {

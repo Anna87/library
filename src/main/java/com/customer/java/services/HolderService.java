@@ -20,15 +20,15 @@ public class HolderService {
     @Autowired
     JsonParserHelper jsonParserHelper;
 
-    public String GetAllHolders() {
-        return jsonParserHelper.WriteToStrJson(holderRepository.findAll());
+    public String getAllHolders() {
+        return jsonParserHelper.writeToStrJson(holderRepository.findAll());
     }
 
-    public Holder AddHolder(HolderDto dto) {
-        return holderRepository.save(this.ConvertFromDto(dto));
+    public Holder addHolder(HolderDto dto) {
+        return holderRepository.save(this.convertFromDto(dto));
     }
 
-    private Holder ConvertFromDto(HolderDto dto) {
+    private Holder convertFromDto(HolderDto dto) {
         Holder holder = Holder.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).email(dto.getEmail()).build();
         if(!Objects.equals(dto.getId(),"")) {
             return holder.toBuilder().id(dto.getId()).build();
@@ -37,7 +37,7 @@ public class HolderService {
     }
 
     public Holder editHolder(HolderDto dto) {
-        Holder holder = this.ConvertFromDto(dto);
+        Holder holder = this.convertFromDto(dto);
         Optional<Holder> optionalHolder = holderRepository.findById(holder.getId());
         Holder holderForUpdate = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
         holderForUpdate.setFirstName(holder.getFirstName());
@@ -49,7 +49,7 @@ public class HolderService {
     }
 
     public boolean deleteHolder(HolderDto dto) {
-        Holder holder = this.ConvertFromDto(dto);
+        Holder holder = this.convertFromDto(dto);
         Optional<Holder> optionalHolder = holderRepository.findById(holder.getId());
         Holder holderForDelete = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
         try {

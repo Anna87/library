@@ -12,7 +12,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
     protected String getDatabaseName() {
         String name;
 
-        return "test";
+        return "library";
     }
 
     @Override

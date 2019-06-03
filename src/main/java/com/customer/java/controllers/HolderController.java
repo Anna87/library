@@ -17,12 +17,12 @@ public class HolderController {
 
     @GetMapping("/holders")
     public String holders() {
-        return holderService.GetAllHolders();
+        return holderService.getAllHolders();
     }
 
     @PostMapping(path = "/addHolder")
     public Holder newBook(@RequestBody HolderDto dto) {
-        return holderService.AddHolder(dto);
+        return holderService.addHolder(dto);
     }
 
     @PostMapping(path = "/editHolder")

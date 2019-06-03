@@ -18,15 +18,6 @@ import java.util.Collection;
 
 @Configuration
 public class ClientConfiguration {
-    /*@Bean
-    public Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
-    }
-    /*
-    @Bean
-    public ErrorDecoder errorDecoder() {
-        return new ErrorDecoder.Default();
-    }*/
 
     @Autowired
     private ObjectFactory<HttpMessageConverters> messageConverters;
@@ -55,20 +46,4 @@ public class ClientConfiguration {
         };
         return new ResponseEntityDecoder(decoder);
     }
-
-/*
-    @Bean
-    public OkHttpClient client() {
-        return new OkHttpClient();
-    }
-    */
-    /*
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return requestTemplate -> {
-            //requestTemplate.header("user", "ajeje");
-            //requestTemplate.header("password", "brazof");
-            requestTemplate.header("Accept", "application/json");
-        };
-    }*/
 }
