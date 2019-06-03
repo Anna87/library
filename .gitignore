@@ -1,7 +1,8 @@
-
+# Created by .ignore support plugin (hsz.mobi)
 .DS_Store
-.idea/*
-
-customer.iml
-target/*
+.gitignore
+.idea/
+src/test/
+target/generated-sources/
 *.iml
+customer.iml
