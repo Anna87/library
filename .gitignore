@@ -3,6 +3,6 @@
 .gitignore
 .idea/
 src/test/
-target/generated-sources/
+target/
 *.iml
 customer.iml
