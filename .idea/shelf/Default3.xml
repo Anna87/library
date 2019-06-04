@@ -1,9 +1,0 @@
-<changelist name="Default3" date="1556139885755" recycled="true">
-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Default3/shelved.patch" />
-  <option name="DESCRIPTION" value="Default" />
-  <binary>
-    <option name="BEFORE_PATH" value="target/classes/com/customer/java/Dto/BookDto$BookDtoBuilder.class" />
-    <option name="AFTER_PATH" value="target/classes/com/customer/java/Dto/BookDto$BookDtoBuilder.class" />
-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Default/BookDto$BookDtoBuilder.class" />
-  </binary>
-</changelist>
