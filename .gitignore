@@ -74,4 +74,8 @@ buildNumber.properties
 # *.ipr
 
 # Sonarlint plugin
+<<<<<<< HEAD
 .idea/sonarlint
+=======
+.idea/sonarlint
+>>>>>>> 89746965353219c00d0ce92a073794126e2660a2
