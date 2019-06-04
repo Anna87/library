@@ -4,6 +4,7 @@
 target/
 *.iml
 /dependency-reduced-pom.xml
+
 ### macOS template
 */.DS_Store
 .AppleDouble
