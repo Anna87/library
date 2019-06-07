@@ -1,38 +1,41 @@
 package com.library.java.controllers;
 
 import com.library.java.Dto.HolderDto;
-import com.library.java.models.Holder;
+import com.library.java.Dto.responses.HolderDetails;
 import com.library.java.services.HolderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @Secured(value = {"ROLE_ADMIN"})
 @RestController
 @RequestMapping("/holder")
+@RequiredArgsConstructor
 public class HolderController {
 
-    @Autowired
-    HolderService holderService;
+    private final HolderService holderService;
 
-    @GetMapping("/holders")
-    public String holders() {
+    @GetMapping
+    public String getAll() {
         return holderService.getAllHolders();
     }
 
-    @PostMapping(path = "/addHolder")
-    public Holder newBook(@RequestBody HolderDto dto) {
-        return holderService.addHolder(dto);
+    @PostMapping(path = "/add")
+    public HolderDetails newBook(@Valid @RequestBody final HolderDto dto) {
+        return holderService.convertToHolderDetails(holderService.addHolder(dto));
     }
 
-    @PostMapping(path = "/editHolder")
-    public Holder editBook(@RequestBody HolderDto dto) {
-        return holderService.editHolder(dto);
+    @PatchMapping("/{id}/edit")
+    public HolderDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final HolderDto dto) {
+        return holderService.convertToHolderDetails(holderService.editHolder(id, dto));
     }
 
-    @PostMapping(path = "/deleteHolder")
-    public boolean deleteBook(@RequestBody HolderDto dto) {
-        return holderService.deleteHolder(dto);
+    @GetMapping("/{id}/delete")
+    public boolean deleteBook(@NotBlank @PathVariable("id") final String id) {
+        return holderService.deleteHolder(id);
     }
 
 }

@@ -1,15 +1,12 @@
-package com.library.java.models;
+package com.library.java.Dto.responses;
 
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Builder;
+import lombok.Value;
 
-@Document
 @Builder(toBuilder = true)
 @Value
-public class Book {
-    @Id
+public class BookDetails {
     private final String id;
     private final String title;
     private final String autor;

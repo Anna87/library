@@ -1,6 +1,7 @@
 package com.library.java.services;
 
 import com.library.java.Dto.BookDto;
+import com.library.java.Dto.responses.BookDetails;
 import com.library.java.client.StorageClient;
 import com.library.java.common.JsonParserHelper;
 import com.library.java.models.Book;
@@ -29,38 +30,40 @@ public class BookService {
     @Autowired
     StorageClient storageClient;
 
-    public String getAllBooks(){
+    public String getAll(){
         return jsonParserHelper.writeToStrJson(bookRepository.findAll());
     }
 
-    public Book AddBook(MultipartFile data, String bookProps) {
-        BookDto bookDto = jsonParserHelper.readValue(bookProps, BookDto.class);
+    public Book addBook(MultipartFile data, String bookProps) {
+        final BookDto bookDto = jsonParserHelper.readValue(bookProps, BookDto.class);
         if(data != null){
             String fileId =  storageClient.addDigitalBook(data,bookDto.getTitle(), bookDto.getAutor());
-            bookDto.setFileId(fileId);
+            return bookRepository.save(this.convertFromDto(bookDto.toBuilder().fileId(fileId).build()));
         }
         return bookRepository.save(this.convertFromDto(bookDto));
+    }
+
+    public BookDetails convertToBookDetails(Book book){
+        return BookDetails.builder().title(book.getTitle()).autor(book.getAutor()).isAvalible(book.getIsAvalible())
+                .hasDigitalFormat(book.getHasDigitalFormat()).fileId(book.getFileId()).fileName(book.getFileName())
+                .id(book.getId()).build();
     }
 
     public MultipartFile downloadDigitalBook(String fileId) throws IOException {
         return storageClient.downloadDigitalBook(fileId);
     }
 
-    public Book editBook(BookDto dto) {
-        Book book = this.convertFromDto(dto);
-        Optional<Book> optionalBook = bookRepository.findById(book.getId());
+    public Book editBook(String id, BookDto dto) {
+        Optional<Book> optionalBook = bookRepository.findById(id);
         Book bookForUpdate = optionalBook.orElseThrow(() -> new NullPointerException(this.BOOKNOTFOUND));
-        bookForUpdate.setAutor(book.getAutor());
-        bookForUpdate.setIsAvalible(book.getIsAvalible());
-        bookForUpdate.setTitle(book.getTitle());
-        Book savedBook =  bookRepository.save(bookForUpdate);
-        borrowService.updateBookInBorrow(bookForUpdate);
+        Book updatedBook = bookForUpdate.toBuilder().autor(dto.getAutor()).isAvalible(dto.isAvalible()).title(dto.getTitle()).build();
+        Book savedBook =  bookRepository.save(updatedBook);
+        borrowService.updateBookInBorrow(updatedBook);
         return savedBook;
     }
 
-    public boolean deleteBook(BookDto dto) {
-        Book book = this.convertFromDto(dto);
-        Optional<Book> optionalBook = bookRepository.findById(book.getId());
+    public boolean deleteBook(String id) {
+        Optional<Book> optionalBook = bookRepository.findById(id);
         Book bookForDelete = optionalBook.orElseThrow(() -> new NullPointerException(this.BOOKNOTFOUND));
         try {
             bookRepository.delete(bookForDelete);
@@ -72,8 +75,8 @@ public class BookService {
     }
 
     private Book convertFromDto(BookDto dto) {
-        Book book = Book.builder().title(dto.getTitle()).autor(dto.getAutor()).isAvalible(dto.getIsAvalible())
-                .hasDigitalFormat(dto.getHasDigitalFormat()).fileId(dto.getFileId()).fileName(dto.getFileName())
+        Book book = Book.builder().title(dto.getTitle()).autor(dto.getAutor()).isAvalible(dto.isAvalible())
+                .hasDigitalFormat(dto.isHasDigitalFormat()).fileId(dto.getFileId()).fileName(dto.getFileName())
                 .build();
         if(!Objects.equals(dto.getId(),"")) {
             return book.toBuilder().id(dto.getId()).build();

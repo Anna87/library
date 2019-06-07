@@ -1,7 +1,8 @@
 package com.library.java.services;
 
+import com.google.common.collect.Lists;
 import com.library.java.Dto.BorrowDto;
-import com.library.java.Dto.HolderDto;
+import com.library.java.Dto.responses.BorrowDetails;
 import com.library.java.common.JsonParserHelper;
 import com.library.java.models.Book;
 import com.library.java.models.Borrow;
@@ -9,7 +10,6 @@ import com.library.java.models.Holder;
 import com.library.java.repositories.BookRepository;
 import com.library.java.repositories.BorrowRepository;
 import com.library.java.repositories.HolderRepository;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BorrowService {
+    private final String HOLDERNOTFOUND = "Holder not found";
     @Autowired
     BorrowRepository borrowRepository;
     @Autowired
@@ -39,8 +40,9 @@ public class BorrowService {
         return jsonParserHelper.writeToStrJson(borrowRepository.findAll());
     }
 
-    public List<Borrow> findByHolder(HolderDto dto){
-        Holder holder = holderRepository.findByLastName(dto.getLastName()).get(0);
+    public List<Borrow> findByHolder(String id){
+        Optional<Holder> optionalHolder = holderRepository.findById(id);
+        Holder holder = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
         return borrowRepository.findByHolder(holder);
     }
 
@@ -52,9 +54,18 @@ public class BorrowService {
         Iterable<String> ids = Arrays.stream(books).map(s -> s.getId()).collect(Collectors.toList());
         Iterable<Book> foundBooks = bookRepository.findAllById(ids);
         for (Book item : foundBooks) {
-            item.setIsAvalible(false);
+            bookRepository.save(item.toBuilder().isAvalible(false).build()); // ??? TODO bookRepository.saveAll
         }
-        bookRepository.saveAll(foundBooks);
+    }
+
+    public BorrowDetails convertToBorrowDetails(Borrow borrow){
+        return BorrowDetails.builder().id(borrow.getId()).books(borrow.getBooks())
+                .holder(borrow.getHolder()).build();
+    }
+    public List<BorrowDetails> convertToBorrowDetails(List<Borrow> borrows){
+        return borrows.stream().map(borrow ->
+                BorrowDetails.builder().id(borrow.getId()).books(borrow.getBooks()).holder(borrow.getHolder()).build())
+                .collect(Collectors.toList());
     }
 
     public void updateBookInBorrow(Book book) {
@@ -66,18 +77,15 @@ public class BorrowService {
                 if(book.getIsAvalible()){
                     removeBookFromBorrow(borrows, borrow,b);
                 }else {
-                    b.setTitle(book.getTitle());
-                    b.setAutor(book.getAutor());
+                    bookRepository.save(b.toBuilder().title(book.getTitle()).autor(book.getAutor()).build()); // ??? TODO bookRepository.saveAll
                 }
                 break;
             }
             break;
         }
-        borrowRepository.saveAll(borrows);
     }
 
     private void removeBookFromBorrow(Iterable<Borrow> borrows, Borrow borrow, Book book){
-
         borrow.books.remove(book);
         if(borrow.books.size() == 0){
             Iterator<Borrow> i = borrows.iterator();
@@ -95,8 +103,8 @@ public class BorrowService {
     public void updateHolderInBorrow(Holder holder) {
         Iterable<Borrow> borrows = borrowRepository.findByHolder(holder);
         for (Borrow item : borrows) {
-            item.holder.setFirstName(holder.getFirstName());
-            item.holder.setLastName(holder.getLastName());
+            Borrow updatedBorrow = item.toBuilder().holder(holder).build();
+            borrowRepository.save(updatedBorrow);
         }
     }
 

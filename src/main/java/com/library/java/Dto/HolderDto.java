@@ -2,13 +2,18 @@ package com.library.java.Dto;
 
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 @Builder(toBuilder = true)
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Value
 public class HolderDto {
-    String id;
-    String firstName;
-    String lastName;
-    String email;
+    private final String id;
+    @NotBlank
+    private final String firstName;
+    @NotBlank
+    private final String lastName;
+    @NotBlank
+    @Email
+    private final String email;
 }

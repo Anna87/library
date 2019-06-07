@@ -1,6 +1,7 @@
 package com.library.java.services;
 
 import com.library.java.Dto.HolderDto;
+import com.library.java.Dto.responses.HolderDetails;
 import com.library.java.common.JsonParserHelper;
 import com.library.java.models.Holder;
 import com.library.java.repositories.HolderRepository;
@@ -31,26 +32,23 @@ public class HolderService {
     private Holder convertFromDto(HolderDto dto) {
         Holder holder = Holder.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).email(dto.getEmail()).build();
         if(!Objects.equals(dto.getId(),"")) {
-            return holder.toBuilder().id(dto.getId()).build();
+            return holder.toBuilder().id(dto.getId()).build(); // TODO new
         }
         return holder;
     }
 
-    public Holder editHolder(HolderDto dto) {
-        Holder holder = this.convertFromDto(dto);
-        Optional<Holder> optionalHolder = holderRepository.findById(holder.getId());
+    public Holder editHolder(String id, HolderDto dto) {
+        Optional<Holder> optionalHolder = holderRepository.findById(id);
         Holder holderForUpdate = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
-        holderForUpdate.setFirstName(holder.getFirstName());
-        holderForUpdate.setLastName(holder.getLastName());
-        holderForUpdate.setEmail(holder.getEmail());
-        Holder savedHolder =  holderRepository.save(holderForUpdate);
-        borrowService.updateHolderInBorrow(holderForUpdate);
+        Holder updatedHolder = holderForUpdate.toBuilder().firstName(dto.getFirstName()).lastName(dto.getLastName())
+                .email(dto.getEmail()).build();
+        Holder savedHolder =  holderRepository.save(updatedHolder);
+        borrowService.updateHolderInBorrow(updatedHolder);
         return savedHolder;
     }
 
-    public boolean deleteHolder(HolderDto dto) {
-        Holder holder = this.convertFromDto(dto);
-        Optional<Holder> optionalHolder = holderRepository.findById(holder.getId());
+    public boolean deleteHolder(String id) {
+        Optional<Holder> optionalHolder = holderRepository.findById(id);
         Holder holderForDelete = optionalHolder.orElseThrow(() -> new NullPointerException(this.HOLDERNOTFOUND));
         try {
             holderRepository.delete(holderForDelete);
@@ -59,6 +57,12 @@ public class HolderService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public HolderDetails convertToHolderDetails(Holder holder){
+        return HolderDetails.builder().firstName(holder.getFirstName()).lastName(holder.getLastName())
+                .email(holder.getEmail()).id(holder.getId())
+                .build();
     }
 
 }

@@ -2,17 +2,19 @@ package com.library.java.Dto;
 
 import com.library.java.models.Book;
 import com.library.java.models.Holder;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Builder(toBuilder = true)
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Value
 public class BorrowDto {
-    Holder holder;
-    Book[] books;
-    long expiredDate;
+    @NotNull
+    private final Holder holder;
+    @Min(1)
+    private final Book[] books;
+    // TODO wtah validation
+    private final long expiredDate;
 }

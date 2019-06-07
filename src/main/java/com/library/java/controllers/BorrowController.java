@@ -1,34 +1,36 @@
 package com.library.java.controllers;
 
 import com.library.java.Dto.BorrowDto;
-import com.library.java.Dto.HolderDto;
-import com.library.java.models.Borrow;
+import com.library.java.Dto.responses.BorrowDetails;
 import com.library.java.services.BorrowService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Secured(value = {"ROLE_ADMIN"})
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/borrow")
 public class BorrowController {
-    @Autowired
-    BorrowService borrowService;
 
-    @GetMapping("/borrows")
-    public String borrows() {
+    private final BorrowService borrowService;
+
+    @GetMapping
+    public String getAll() {
         return borrowService.getAllBorrow();
     }
 
-    @PostMapping(path = "/addBorrow")
-    public Borrow newBook(@RequestBody BorrowDto borrowDto) {
-        return borrowService.addBorrow(borrowDto);
+    @PostMapping(path = "/add")
+    public BorrowDetails newBook(@Valid @RequestBody final BorrowDto borrowDto) {
+        return borrowService.convertToBorrowDetails(borrowService.addBorrow(borrowDto));
     }
 
-    @PostMapping("/borrowsByHolder")
-    public List<Borrow> getBooksByHolder(@RequestBody HolderDto holderDto){
-        return borrowService.findByHolder(holderDto);
+    @GetMapping("/{id}/getBorrowsByHolderId") // TODO ??? getByHolderId
+    public List<BorrowDetails> getBorrowsByHolder(@NotBlank @PathVariable("id") final String id){
+        return borrowService.convertToBorrowDetails(borrowService.findByHolder(id));
     }
 }
