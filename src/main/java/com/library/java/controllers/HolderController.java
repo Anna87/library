@@ -1,7 +1,9 @@
 package com.library.java.controllers;
 
 import com.library.java.Dto.HolderDto;
+import com.library.java.Dto.requests.HolderUpdateRequest;
 import com.library.java.Dto.responses.HolderDetails;
+import com.library.java.converters.HolderDetailsConverter;
 import com.library.java.services.HolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +20,8 @@ public class HolderController {
 
     private final HolderService holderService;
 
+    private final HolderDetailsConverter holderDetailsConverter;
+
     @GetMapping
     public String getAll() {
         return holderService.getAllHolders();
@@ -25,12 +29,12 @@ public class HolderController {
 
     @PostMapping(path = "/add")
     public HolderDetails newBook(@Valid @RequestBody final HolderDto dto) {
-        return holderService.convertToHolderDetails(holderService.addHolder(dto));
+        return holderDetailsConverter.convert(holderService.addHolder(dto));
     }
 
     @PatchMapping("/{id}/edit")
-    public HolderDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final HolderDto dto) {
-        return holderService.convertToHolderDetails(holderService.editHolder(id, dto));
+    public HolderDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final HolderUpdateRequest holderUpdateRequest) {
+        return holderDetailsConverter.convert(holderService.editHolder(id, holderUpdateRequest));
     }
 
     @GetMapping("/{id}/delete")

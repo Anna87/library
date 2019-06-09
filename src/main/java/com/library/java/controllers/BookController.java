@@ -1,7 +1,8 @@
 package com.library.java.controllers;
 
-import com.library.java.Dto.BookDto;
+import com.library.java.Dto.requests.BookUpdateRequest;
 import com.library.java.Dto.responses.BookDetails;
+import com.library.java.converters.BookDetailsConverter;
 import com.library.java.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public class BookController {
 
     private final BookService bookService;
+    private final BookDetailsConverter bookDetailsConverter; //TODO add notNull converter, check converter pattern.
 
     @GetMapping
     public String getAll() {
@@ -31,15 +33,18 @@ public class BookController {
 
     @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/add")
-    public BookDetails newBook(@RequestParam(value = "file", required = false) final MultipartFile data, @RequestParam("bookProps") final String bookProps) {
-        return bookService.convertToBookDetails(bookService.addBook(data, bookProps));
+    public BookDetails newBook(
+            @RequestParam(value = "file", required = false) final MultipartFile data,
+            @RequestParam("bookProps") final String bookProps
+    ) {
+        return bookDetailsConverter.convert(bookService.addBook(data, bookProps));
     }
 
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> download(@NotBlank @PathVariable("id") final String id) throws IOException {
-        MultipartFile file = bookService.downloadDigitalBook(id);
-        byte[] bytes = IOUtils.toByteArray(file.getInputStream());
+        final MultipartFile file = bookService.downloadDigitalBook(id);
+        final byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType()))
                 .body(new ByteArrayResource(bytes,file.getName()));
@@ -47,8 +52,8 @@ public class BookController {
 
     @Secured(value = {"ROLE_ADMIN"})
     @PatchMapping("/{id}/edit")
-    public BookDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final BookDto dto) {
-        return bookService.convertToBookDetails(bookService.editBook(id,dto));
+    public BookDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final BookUpdateRequest bookUpdateRequest) {
+        return bookDetailsConverter.convert(bookService.editBook(id,bookUpdateRequest));
     }
 
     @Secured(value = {"ROLE_ADMIN"})

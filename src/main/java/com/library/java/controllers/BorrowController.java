@@ -2,6 +2,7 @@ package com.library.java.controllers;
 
 import com.library.java.Dto.BorrowDto;
 import com.library.java.Dto.responses.BorrowDetails;
+import com.library.java.converters.BorrowDetailsConverter;
 import com.library.java.services.BorrowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +19,7 @@ import java.util.List;
 public class BorrowController {
 
     private final BorrowService borrowService;
+    private final BorrowDetailsConverter borrowDetailsConverter;
 
     @GetMapping
     public String getAll() {
@@ -26,11 +28,11 @@ public class BorrowController {
 
     @PostMapping(path = "/add")
     public BorrowDetails newBook(@Valid @RequestBody final BorrowDto borrowDto) {
-        return borrowService.convertToBorrowDetails(borrowService.addBorrow(borrowDto));
+        return borrowDetailsConverter.convert(borrowService.addBorrow(borrowDto));
     }
 
     @GetMapping("/{id}/getBorrowsByHolderId") // TODO ??? getByHolderId
     public List<BorrowDetails> getBorrowsByHolder(@NotBlank @PathVariable("id") final String id){
-        return borrowService.convertToBorrowDetails(borrowService.findByHolder(id));
+        return borrowDetailsConverter.convertList(borrowService.findByHolder(id));
     }
 }

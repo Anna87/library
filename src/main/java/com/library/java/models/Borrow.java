@@ -9,13 +9,14 @@ import java.util.List;
 
 @Document
 @Builder(toBuilder = true)
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Borrow {
     @Id
     private String id;
-    public Holder holder;
-    public List<Book> books;
-    public Date expiredDate;
+    private Holder holder;
+    private List<Book> books;
+    private Date expiredDate;
 
 }

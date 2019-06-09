@@ -7,14 +7,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @Builder(toBuilder = true)
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     @Id
-    private final String id;
-    private final String title;
-    private final String autor;
-    private final Boolean isAvalible;
-    private final Boolean hasDigitalFormat;
-    private final String fileId;
-    private final String fileName;
+    private String id;
+    private String title;
+    private String autor;
+    private Boolean isAvalible;
+    private Boolean hasDigitalFormat;
+    private String fileId;
+    private String fileName;
 }

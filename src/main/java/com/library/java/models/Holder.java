@@ -1,29 +1,24 @@
 package com.library.java.models;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
-import org.springframework.data.annotation.PersistenceConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 
 @Document
 @Builder(toBuilder = true)
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Holder {
     @Id
-    private final String id;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
 
-    @PersistenceConstructor
-    public Holder(String id, String firstName, String lastName, String email)
-    {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 }
