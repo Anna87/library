@@ -47,7 +47,7 @@ public class BorrowService {
     }
 
     private void setBooksUnavalible(final Book[] books) {
-        Iterable<String> ids = Arrays.stream(books).map(s -> s.getId()).collect(Collectors.toList());
+        Iterable<String> ids = Arrays.stream(books).map(Book::getId).collect(Collectors.toList());
         Iterable<Book> foundBooks = bookRepository.findAllById(ids);
         for (Book item : foundBooks) {
             bookRepository.save(item.toBuilder().isAvalible(false).build());

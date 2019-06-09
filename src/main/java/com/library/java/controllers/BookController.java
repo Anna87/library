@@ -47,13 +47,16 @@ public class BookController {
         final byte[] bytes = IOUtils.toByteArray(file.getInputStream());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType()))
-                .body(new ByteArrayResource(bytes,file.getName()));
+                .body(new ByteArrayResource(bytes, file.getName()));
     }
 
     @Secured(value = {"ROLE_ADMIN"})
     @PatchMapping("/{id}/edit")
-    public BookDetails editBook(@NotBlank @PathVariable("id") final String id, @Valid @RequestBody final BookUpdateRequest bookUpdateRequest) {
-        return bookDetailsConverter.convert(bookService.editBook(id,bookUpdateRequest));
+    public BookDetails editBook(
+            @NotBlank @PathVariable("id") final String id,
+            @Valid @RequestBody final BookUpdateRequest bookUpdateRequest
+    ) {
+        return bookDetailsConverter.convert(bookService.editBook(id, bookUpdateRequest));
     }
 
     @Secured(value = {"ROLE_ADMIN"})
