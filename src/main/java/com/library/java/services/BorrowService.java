@@ -115,7 +115,6 @@ public class BorrowService {
     }
 
     public List<Borrow> getExpiredBorrow(final Date date) {
-
         return borrowRepository.findByExpiredDateLessThanEqual(date);
     }
 }
