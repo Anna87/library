@@ -1,7 +1,7 @@
 package com.library.java.services;
 
-import com.library.java.Dto.BookDto;
-import com.library.java.Dto.requests.BookUpdateRequest;
+import com.library.java.dto.requests.BookCreationRequest;
+import com.library.java.dto.requests.BookUpdateRequest;
 import com.library.java.client.StorageClient;
 import com.library.java.common.JsonParserHelper;
 import com.library.java.converters.BookConverter;
@@ -12,13 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BookService {
-    private final String BOOKNOTFOUND = "Book not found";
+    private final String bookNotFound = "Book not found";
 
     private final BookRepository bookRepository;
 
@@ -30,51 +31,55 @@ public class BookService {
 
     private final BookConverter bookConverter;
 
-    public String getAll() {
-        return jsonParserHelper.writeToStrJson(bookRepository.findAll());
+    public List<Book> getAll() {
+        return bookRepository.findAll();
     }
 
     public Book addBook(MultipartFile data, String bookProps) {
-        final BookDto bookDto = jsonParserHelper.readValue(bookProps, BookDto.class);
-        if (data != null) {
-            String fileId = storageClient.addDigitalBook(data, bookDto.getTitle(), bookDto.getAutor());
-            return bookRepository.save(bookConverter.convert(bookDto.toBuilder().fileId(fileId).build()));
+        final BookCreationRequest bookCreationRequest = jsonParserHelper.readValue(bookProps, BookCreationRequest.class);
+        final Book newBook = bookConverter.convert(bookCreationRequest);
+
+        if (data != null && bookCreationRequest.isHasDigitalFormat()) {
+            final String fileId = storageClient.addDigitalBook(data, bookCreationRequest.getTitle(), bookCreationRequest.getAutor());
+            newBook.setFileId(fileId);
+            newBook.setFileName(bookCreationRequest.getFileName());
+            newBook.setHasDigitalFormat(true);
+            return bookRepository.save(newBook);
         }
-        return bookRepository.save(bookConverter.convert(bookDto));
+
+        return bookRepository.save(newBook);
     }
 
     public MultipartFile downloadDigitalBook(String fileId) throws IOException {
         return storageClient.downloadDigitalBook(fileId);
     }
 
-    public Book editBook(final String id, final BookUpdateRequest bookUpdateRequest) {
+    @Transactional//TODO add test
+    public Book editBook(final String  id, final BookUpdateRequest bookUpdateRequest) {
         final Book bookForUpdate =
                 bookRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(this.BOOKNOTFOUND));
+                        .orElseThrow(() -> new NotFoundException(bookNotFound));
 
         final Book updatedBook = bookForUpdate.toBuilder()
-                .autor(bookUpdateRequest.getAutor())
-                .isAvalible(bookUpdateRequest.isAvalible())
+                .author(bookUpdateRequest.getAutor())
+                .isAvailable(bookUpdateRequest.isAvalible())
                 .title(bookUpdateRequest.getTitle())
                 .build();
 
         final Book savedBook = bookRepository.save(updatedBook);
 
-        borrowService.updateBookInBorrow(updatedBook);  /// TODO what???
+        borrowService.updateBookInBorrow(updatedBook);
 
         return savedBook;
     }
 
-    public boolean deleteBook(String id) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        Book bookForDelete = optionalBook.orElseThrow(() -> new NotFoundException(this.BOOKNOTFOUND));
-        try {
-            bookRepository.delete(bookForDelete);
-            borrowService.deleteBookInBorrow(bookForDelete);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    @Transactional
+    public void deleteBook(final String id) {
+        final Book book =
+                bookRepository.findById(id)
+                        .orElseThrow(() -> new NotFoundException(bookNotFound));
+        bookRepository.delete(book);
+        borrowService.removeBookFromBorrows(book);
     }
 
 }

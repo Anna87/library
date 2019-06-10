@@ -1,20 +1,17 @@
 package com.library.java.converters;
 
-import com.library.java.Dto.HolderDto;
+import com.library.java.dto.requests.HolderCreationRequest;
 import com.library.java.models.Holder;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Component
-public class HolderConverter implements GenericConverter<Holder,HolderDto> {
+public class HolderConverter implements GenericConverter<Holder,HolderCreationRequest> {
 
     @Override
-    public Holder convert(final HolderDto dto) {
-        Holder holder = Holder.builder().firstName(dto.getFirstName()).lastName(dto.getLastName()).email(dto.getEmail()).build();
-        if(!Objects.equals(dto.getId(),"")) {
-            return holder.toBuilder().id(dto.getId()).build();
-        }
-        return holder;
+    public Holder convert(final HolderCreationRequest request) {
+        return Holder.builder().
+                firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail()).build();
     }
 }

@@ -1,13 +1,14 @@
 package com.library.java.controllers;
 
-import com.library.java.Dto.requests.BookUpdateRequest;
-import com.library.java.Dto.responses.BookDetails;
+import com.library.java.dto.requests.BookUpdateRequest;
+import com.library.java.dto.responses.BookDetails;
 import com.library.java.converters.BookDetailsConverter;
 import com.library.java.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,18 +26,18 @@ import java.io.IOException;
 public class BookController {
 
     private final BookService bookService;
-    private final BookDetailsConverter bookDetailsConverter; //TODO add notNull converter, check converter pattern.
+    private final BookDetailsConverter bookDetailsConverter;
 
     @GetMapping
-    public String getAll() {
-        return bookService.getAll();
+    public List<BookDetails> getAll() {//TODO change on client
+        return bookDetailsConverter.convertList(bookService.getAll());
     }
 
     @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/add")
     public BookDetails newBook(
             @RequestParam(value = "file", required = false) final MultipartFile data,
-            @RequestParam("bookProps") final String bookProps
+            @RequestParam("bookProps") final String bookProps//TODO use object BookCreationRequest
     ) {
         return bookDetailsConverter.convert(bookService.addBook(data, bookProps));
     }
@@ -60,8 +62,9 @@ public class BookController {
     }
 
     @Secured(value = {"ROLE_ADMIN"})
-    @GetMapping("/{id}/delete")
-    public boolean deleteBook(@NotBlank @PathVariable("id") final String id) {
-        return bookService.deleteBook(id);
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{id}/delete")
+    public void deleteBook(@NotBlank @PathVariable("id") final String id) {
+        bookService.deleteBook(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.library.java.Dto.responses;
+package com.library.java.dto.responses;
 
 import com.library.java.models.Book;
 import com.library.java.models.Holder;

@@ -16,4 +16,6 @@ public interface BorrowRepository extends MongoRepository<Borrow, String> {
     List<Borrow> findByBooksIdIn(String id);
 
     List<Borrow> findByExpiredDateLessThanEqual(Date date);
+
+    List<Borrow> findByHolderId(String id);
 }

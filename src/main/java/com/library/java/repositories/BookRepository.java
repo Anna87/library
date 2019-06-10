@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface BookRepository extends MongoRepository<Book, String> {
     List<Book> findByTitle(String title);
+
+    //List<Book> findByIdsIn(String[] ids); // TODO check working
 }
 

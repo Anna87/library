@@ -1,7 +1,10 @@
 package com.library.java.models;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,11 +15,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Book {
     @Id
-    private String id;
+    private String id;//TODO replace with UUID
     private String title;
-    private String autor;
-    private Boolean isAvalible;
-    private Boolean hasDigitalFormat;
+    private String author;
+    private boolean isAvailable;
+    private boolean hasDigitalFormat;
     private String fileId;
     private String fileName;
 }
+

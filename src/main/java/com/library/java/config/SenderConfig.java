@@ -1,6 +1,5 @@
 package com.library.java.config;
 
-import com.library.java.services.Sender;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -38,11 +37,6 @@ public class SenderConfig {
         template.setMessageConverter(jacksonJmsMessageConverter());
         template.setConnectionFactory(senderActiveMQConnectionFactory());
         return template;
-    }
-
-    @Bean
-    public Sender sender() {
-        return new Sender();
     }
 
 }

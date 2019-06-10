@@ -1,6 +1,6 @@
 package com.library.java.converters;
 
-import com.library.java.Dto.responses.HolderDetails;
+import com.library.java.dto.responses.HolderDetails;
 import com.library.java.models.Holder;
 import org.springframework.stereotype.Component;
 

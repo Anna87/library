@@ -1,4 +1,4 @@
-package com.library.java.Dto.responses;
+package com.library.java.dto.responses;
 
 
 import lombok.Builder;

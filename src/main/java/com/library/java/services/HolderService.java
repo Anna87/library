@@ -1,7 +1,7 @@
 package com.library.java.services;
 
-import com.library.java.Dto.HolderDto;
-import com.library.java.Dto.requests.HolderUpdateRequest;
+import com.library.java.dto.requests.HolderCreationRequest;
+import com.library.java.dto.requests.HolderUpdateRequest;
 import com.library.java.common.JsonParserHelper;
 import com.library.java.converters.HolderConverter;
 import com.library.java.exceptions.NotFoundException;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class HolderService {
-    private final String HOLDERNOTFOUND = "Holder not found";
+    private final String holderNotFound = "Holder not found";
 
     private final HolderRepository holderRepository;
 
@@ -29,14 +29,14 @@ public class HolderService {
         return jsonParserHelper.writeToStrJson(holderRepository.findAll());
     }
 
-    public Holder addHolder(final HolderDto dto) {
+    public Holder addHolder(final HolderCreationRequest dto) {
         return holderRepository.save(holderConverter.convert(dto));
     }
 
 
     public Holder editHolder(final String id, final HolderUpdateRequest holderUpdateRequest) {
         Optional<Holder> optionalHolder = holderRepository.findById(id);
-        Holder holderForUpdate = optionalHolder.orElseThrow(() -> new NotFoundException(this.HOLDERNOTFOUND));
+        Holder holderForUpdate = optionalHolder.orElseThrow(() -> new NotFoundException(this.holderNotFound));
         Holder updatedHolder = holderForUpdate.toBuilder().firstName(holderUpdateRequest.getFirstName()).lastName(holderUpdateRequest.getLastName())
                 .email(holderUpdateRequest.getEmail()).build();
         Holder savedHolder =  holderRepository.save(updatedHolder);
@@ -46,7 +46,7 @@ public class HolderService {
 
     public boolean deleteHolder(final String id) {
         Optional<Holder> optionalHolder = holderRepository.findById(id);
-        Holder holderForDelete = optionalHolder.orElseThrow(() -> new NotFoundException(this.HOLDERNOTFOUND));
+        Holder holderForDelete = optionalHolder.orElseThrow(() -> new NotFoundException(this.holderNotFound));
         try {
             holderRepository.delete(holderForDelete);
             borrowService.deleteHolderInBorrow(holderForDelete);
