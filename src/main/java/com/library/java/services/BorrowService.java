@@ -89,18 +89,12 @@ public class BorrowService {
     }
 
     public void updateHolderInBorrow(final Holder holder) {
-        Iterable<Borrow> borrows = borrowRepository.findByHolder(holder);
-        for (Borrow item : borrows) {
-            Borrow updatedBorrow = item.toBuilder().holder(holder).build();
-            borrowRepository.save(updatedBorrow);
-        }
+        borrowRepository.findByHolder(holder).forEach(borrow ->
+                borrowRepository.save(borrow.toBuilder().holder(holder).build()));
     }
 
     public void deleteHolderInBorrow(final Holder holder) {
-        Iterable<Borrow> borrows = borrowRepository.findByHolder(holder);
-        for (Borrow item : borrows) {
-            borrowRepository.delete(item);
-        }
+        borrowRepository.findByHolder(holder).forEach(borrowRepository::delete);
     }
 
     public List<Borrow> getExpiredBorrow(final Date date) {
