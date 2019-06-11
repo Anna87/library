@@ -12,7 +12,7 @@ public class BookCreationRequest {
     @NotBlank
     private final String title;
     @NotBlank
-    private final String autor;
+    private final String author;
     private final boolean isAvalible;
     private final boolean hasDigitalFormat;
     @Deprecated

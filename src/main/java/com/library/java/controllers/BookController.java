@@ -1,8 +1,9 @@
 package com.library.java.controllers;
 
+import com.library.java.converters.BookDetailsConverter;
+import com.library.java.dto.requests.BookCreationRequest;
 import com.library.java.dto.requests.BookUpdateRequest;
 import com.library.java.dto.responses.BookDetails;
-import com.library.java.converters.BookDetailsConverter;
 import com.library.java.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -29,17 +30,17 @@ public class BookController {
     private final BookDetailsConverter bookDetailsConverter;
 
     @GetMapping
-    public List<BookDetails> getAll() {//TODO change on client
+    public List<BookDetails> getAll() {
         return bookDetailsConverter.convertList(bookService.getAll());
     }
 
     @Secured(value = {"ROLE_ADMIN"})
     @PostMapping(path = "/add")
     public BookDetails newBook(
-            @RequestParam(value = "file", required = false) final MultipartFile data,
-            @RequestParam("bookProps") final String bookProps//TODO use object BookCreationRequest
+            @RequestPart(value = "bookCreationRequest") final BookCreationRequest bookCreationRequest,
+            @RequestPart(value = "file", required = false) final MultipartFile data
     ) {
-        return bookDetailsConverter.convert(bookService.addBook(data, bookProps));
+        return bookDetailsConverter.convert(bookService.addBook(data, bookCreationRequest));
     }
 
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})

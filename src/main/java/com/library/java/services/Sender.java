@@ -21,7 +21,7 @@ public class Sender {
         final Date date = new Date();
         final List<Borrow> borrows = borrowService.getExpiredBorrow(date);
         for (Borrow borrow : borrows) {
-            jmsTemplate.convertAndSend("library-queue", borrow);//TODO update name in notification service
+            jmsTemplate.convertAndSend("library-queue", borrow);
         }
     }
 }

@@ -3,13 +3,18 @@ package com.library.java.dto.requests;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Builder(toBuilder = true)
 @Value
 public class BorrowCreationRequest {
-    private final String holderId;//TODO validation
+    @NotBlank
+    private final String holderId;
+    @NotEmpty
     private final List<String> bookIds;
-    // TODO wtah validation
+    @NotNull
     private final long expiredDate;
 }

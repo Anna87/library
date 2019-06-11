@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Borrow {
     @Id
-    private String id;//TODO replace with UUID
+    private String id;
     private Holder holder;
     private List<Book> books;
     private Date expiredDate;

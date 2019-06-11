@@ -24,18 +24,11 @@ public interface StorageClient {
     );
 
     @RequestMapping(
-            method = RequestMethod.GET,//TODO update method in storage service
+            method = RequestMethod.GET,
             value = "/storage/downloadDigitalBook",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
     )
     MultipartFile downloadDigitalBook(@NotBlank @RequestParam("fileId") final String fileId);
-
-    @RequestMapping(
-            method = RequestMethod.GET,//TODO update in storage
-            value = "/storage/digitalBooksTest",
-            consumes = "multipart/form-data"
-    )
-    void GetBookById(@NotNull @RequestPart("file") final MultipartFile data);
 
 }
 

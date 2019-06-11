@@ -11,7 +11,7 @@ public class BookConverter implements GenericConverter<Book, BookCreationRequest
     public Book convert(final BookCreationRequest request) {
         return Book.builder()
                 .title(request.getTitle())
-                .author(request.getAutor())
+                .author(request.getAuthor())
                 .isAvailable(request.isAvalible())
                 .build();
     }

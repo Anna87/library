@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Book {
     @Id
-    private String id;//TODO replace with UUID
+    private String id;
     private String title;
     private String author;
     private boolean isAvailable;

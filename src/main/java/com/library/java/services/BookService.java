@@ -1,10 +1,9 @@
 package com.library.java.services;
 
+import com.library.java.client.StorageClient;
+import com.library.java.converters.BookConverter;
 import com.library.java.dto.requests.BookCreationRequest;
 import com.library.java.dto.requests.BookUpdateRequest;
-import com.library.java.client.StorageClient;
-import com.library.java.common.JsonParserHelper;
-import com.library.java.converters.BookConverter;
 import com.library.java.exceptions.NotFoundException;
 import com.library.java.models.Book;
 import com.library.java.repositories.BookRepository;
@@ -25,8 +24,6 @@ public class BookService {
 
     private final BorrowService borrowService;
 
-    private final JsonParserHelper jsonParserHelper;
-
     private final StorageClient storageClient;
 
     private final BookConverter bookConverter;
@@ -35,12 +32,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book addBook(MultipartFile data, String bookProps) {
-        final BookCreationRequest bookCreationRequest = jsonParserHelper.readValue(bookProps, BookCreationRequest.class);
+    public Book addBook(MultipartFile data, BookCreationRequest bookCreationRequest) {
         final Book newBook = bookConverter.convert(bookCreationRequest);
 
         if (data != null && bookCreationRequest.isHasDigitalFormat()) {
-            final String fileId = storageClient.addDigitalBook(data, bookCreationRequest.getTitle(), bookCreationRequest.getAutor());
+            final String fileId = storageClient.addDigitalBook(data, bookCreationRequest.getTitle(), bookCreationRequest.getAuthor());
             newBook.setFileId(fileId);
             newBook.setFileName(bookCreationRequest.getFileName());
             newBook.setHasDigitalFormat(true);
