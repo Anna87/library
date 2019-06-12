@@ -6,12 +6,12 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 
-@Builder(toBuilder = true)
+@Builder
 @Value
 public class BookUpdateRequest {
     @NotBlank
     private final String title;
     @NotBlank
-    private final String autor;
-    private final boolean isAvalible;
+    private final String author;
+    private final boolean isAvailable;
 }

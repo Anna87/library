@@ -9,8 +9,8 @@ import lombok.Value;
 public class BookDetails {
     private final String id;
     private final String title;
-    private final String autor;
-    private final Boolean isAvalible;
+    private final String author;
+    private final Boolean isAvailable;
     private final Boolean hasDigitalFormat;
     private final String fileId;
     private final String fileName;

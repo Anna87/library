@@ -16,5 +16,4 @@ public class BorrowDetails {
     private final Holder holder;
     private final List<Book> books;
     private final Date expiredDate;
-
 }

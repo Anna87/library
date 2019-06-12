@@ -9,7 +9,10 @@ public class BorrowDetailsConverter implements GenericConverter<BorrowDetails, B
 
     @Override
     public BorrowDetails convert(final Borrow borrow) {
-        return BorrowDetails.builder().id(borrow.getId()).books(borrow.getBooks())
-                .holder(borrow.getHolder()).build();
+        return BorrowDetails.builder()
+                .id(borrow.getId())
+                .books(borrow.getBooks())
+                .holder(borrow.getHolder())
+                .build();
     }
 }

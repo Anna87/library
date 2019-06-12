@@ -1,6 +1,5 @@
 package com.library.java.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 @Configuration
+//@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;

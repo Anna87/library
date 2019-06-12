@@ -12,7 +12,7 @@ public class BookConverter implements GenericConverter<Book, BookCreationRequest
         return Book.builder()
                 .title(request.getTitle())
                 .author(request.getAuthor())
-                .isAvailable(request.isAvalible())
+                .isAvailable(request.isAvailable())
                 .build();
     }
 }

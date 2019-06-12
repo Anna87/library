@@ -5,7 +5,7 @@ import lombok.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Builder(toBuilder = true)
+@Builder
 @Value
 public class HolderCreationRequest {
     @NotBlank

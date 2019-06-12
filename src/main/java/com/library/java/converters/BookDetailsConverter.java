@@ -9,8 +9,14 @@ public class BookDetailsConverter implements GenericConverter<BookDetails,Book> 
 
     @Override
     public BookDetails convert(final Book book) {
-        return BookDetails.builder().title(book.getTitle()).autor(book.getAuthor()).isAvalible(book.isAvailable())
-                .hasDigitalFormat(book.isHasDigitalFormat()).fileId(book.getFileId()).fileName(book.getFileName())
-                .id(book.getId().toString()).build();
+        return BookDetails.builder()
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .isAvailable(book.isAvailable())
+                .hasDigitalFormat(book.isHasDigitalFormat())
+                .fileId(book.getFileId())
+                .fileName(book.getFileName())
+                .id(book.getId())
+                .build();
     }
 }

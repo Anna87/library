@@ -7,5 +7,9 @@ server:
 
 eureka:
   client:
-    ervice-url:
+    service-url:
       default-zone: http://localhost:8761/eureka
+
+jms:
+  sender:
+    broker-url: tcp://localhost:61616

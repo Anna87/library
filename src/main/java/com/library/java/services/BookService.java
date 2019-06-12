@@ -57,8 +57,8 @@ public class BookService {
                         .orElseThrow(() -> new NotFoundException(bookNotFound));
 
         final Book updatedBook = bookForUpdate.toBuilder()
-                .author(bookUpdateRequest.getAutor())
-                .isAvailable(bookUpdateRequest.isAvalible())
+                .author(bookUpdateRequest.getAuthor())
+                .isAvailable(bookUpdateRequest.isAvailable())
                 .title(bookUpdateRequest.getTitle())
                 .build();
 

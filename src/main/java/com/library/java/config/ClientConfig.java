@@ -3,8 +3,8 @@ package com.library.java.config;
 import feign.codec.Decoder;
 import feign.form.FormEncoder;
 import feign.form.spring.SpringFormEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
@@ -16,11 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 
+@RequiredArgsConstructor
 @Configuration
-public class ClientConfiguration {
+public class ClientConfig {
 
-    @Autowired
-    private ObjectFactory<HttpMessageConverters> messageConverters;
+    private final ObjectFactory<HttpMessageConverters> messageConverters;
 
     @Bean
     public FormEncoder feignFormEncoder() {

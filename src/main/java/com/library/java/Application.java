@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @ComponentScan
 public class Application {
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
     }

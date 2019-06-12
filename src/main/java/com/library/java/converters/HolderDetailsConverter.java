@@ -9,8 +9,11 @@ public class HolderDetailsConverter implements GenericConverter<HolderDetails,Ho
 
     @Override
     public HolderDetails convert(final Holder holder) {
-        return HolderDetails.builder().firstName(holder.getFirstName()).lastName(holder.getLastName())
-                .email(holder.getEmail()).id(holder.getId())
+        return HolderDetails.builder()
+                .firstName(holder.getFirstName())
+                .lastName(holder.getLastName())
+                .email(holder.getEmail())
+                .id(holder.getId())
                 .build();
     }
 }

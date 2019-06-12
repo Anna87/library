@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Builder(toBuilder = true)
+@Builder
 @Value
 public class BorrowCreationRequest {
     @NotBlank
@@ -16,5 +16,5 @@ public class BorrowCreationRequest {
     @NotEmpty
     private final List<String> bookIds;
     @NotNull
-    private final long expiredDate;
+    private final Long expiredDate;
 }

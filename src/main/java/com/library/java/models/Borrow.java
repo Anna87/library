@@ -18,5 +18,4 @@ public class Borrow {
     private Holder holder;
     private List<Book> books;
     private Date expiredDate;
-
 }

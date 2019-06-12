@@ -1,13 +1,13 @@
 package com.library.java.controllers;
 
+import com.library.java.converters.HolderDetailsConverter;
 import com.library.java.dto.requests.HolderCreationRequest;
 import com.library.java.dto.requests.HolderUpdateRequest;
 import com.library.java.dto.responses.HolderDetails;
-import com.library.java.converters.BookDetailsConverter;
-import com.library.java.converters.HolderDetailsConverter;
 import com.library.java.services.BorrowService;
 import com.library.java.services.HolderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +27,9 @@ public class HolderController {
 
     private final BorrowService borrowService;
 
-    private final BookDetailsConverter bookDetailsConverter;
-
     @GetMapping
-    public String getAll() {
-        return holderService.getAllHolders();
+    public List<HolderDetails> getAll() {
+        return holderDetailsConverter.convertList(holderService.getAllHolders());
     }
 
     @PostMapping(path = "/add")
@@ -45,8 +43,9 @@ public class HolderController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public boolean deleteBook(@NotBlank @PathVariable("id") final String id) {
-        return holderService.deleteHolder(id);
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteBook(@NotBlank @PathVariable("id") final String id) {
+        holderService.deleteHolder(id);
     }
 
     @GetMapping("/{id}/books")
