@@ -14,7 +14,7 @@ public interface StorageClient {
 
     @RequestMapping(
             method = RequestMethod.POST,
-            value = "/storage/addDigitalBook",
+            value = "/storage/add",
             consumes = "multipart/form-data"
     )
     String addDigitalBook(
@@ -25,7 +25,7 @@ public interface StorageClient {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            value = "/storage/downloadDigitalBook",
+            value = "/storage/download",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
     )
     MultipartFile downloadDigitalBook(@NotBlank @RequestParam("fileId") final String fileId);

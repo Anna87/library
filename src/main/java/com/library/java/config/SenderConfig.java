@@ -23,6 +23,7 @@ public class SenderConfig {
         return activeMQConnectionFactory;
     }
 
+
     @Bean
     public MessageConverter jacksonJmsMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
@@ -38,5 +39,19 @@ public class SenderConfig {
         template.setConnectionFactory(senderActiveMQConnectionFactory());
         return template;
     }
-
+/*
+    @Bean //TODO not working
+    MappingJackson2MessageConverter jackson2MessageConverter(){
+        final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        converter.setTargetType(MessageType.TEXT);
+        converter.setTypeIdPropertyName("_type");
+        Map<String, Class<?>> typeIdMappings = new HashMap<>();
+        typeIdMappings.put(BorrowNotificationDetails.class.getSimpleName(),BorrowNotificationDetails.class);
+        typeIdMappings.put("SendNotificationEvent",BorrowNotificationDetails.class);
+        converter.setTypeIdMappings(typeIdMappings);
+        ObjectMapper objectMapper = new ObjectMapper();
+        converter.setObjectMapper(objectMapper);
+        return converter;
+    }
+*/
 }

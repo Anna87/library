@@ -12,7 +12,8 @@ public class BorrowNotificationDetailsConverter implements GenericConverter<Borr
     @Override
     public BorrowNotificationDetails convert(final Borrow borrow) {
         return BorrowNotificationDetails.builder()
-                .holderFullName(String.format("%s %s",borrow.getHolder().getFirstName(), borrow.getHolder().getLastName()))
+                .holderFirstName(borrow.getHolder().getFirstName())
+                .holderLastName(borrow.getHolder().getLastName())
                 .holderEmail(borrow.getHolder().getEmail())
                 .books(borrow.getBooks().stream().map(Book::getTitle).collect(Collectors.toList()))
                 .expiredDate(borrow.getExpiredDate().getTime())
