@@ -1,7 +1,7 @@
 package com.library.java.services;
 
 import com.library.java.converters.BorrowNotificationDetailsConverter;
-import com.library.java.dto.responses.BorrowNotificationDetails;
+import com.library.java.dto.responses.NotificationDetails;
 import com.library.java.models.Borrow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jms.core.JmsTemplate;
@@ -24,8 +24,8 @@ public class Sender {
         final Date date = new Date();
         final List<Borrow> borrows = borrowService.getExpiredBorrow(date);
         for (Borrow borrow : borrows) {
-            final BorrowNotificationDetails borrowNotificationDetails = borrowNotificationDetailsConverter.convert(borrow);
-            jmsTemplate.convertAndSend("library-queue", borrowNotificationDetails);
+            final NotificationDetails notificationDetails = borrowNotificationDetailsConverter.convert(borrow);
+            jmsTemplate.convertAndSend("notification-queue", notificationDetails);
         }
     }
 }

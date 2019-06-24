@@ -1,5 +1,6 @@
 package com.library.java.services;
 
+import com.google.common.collect.Lists;
 import com.library.java.client.StorageClient;
 import com.library.java.converters.BookConverter;
 import com.library.java.dto.requests.BookCreationRequest;
@@ -52,9 +53,7 @@ public class BookService {
 
     @Transactional//TODO add test
     public Book editBook(final String  id, final BookUpdateRequest bookUpdateRequest) {
-        final Book bookForUpdate =
-                bookRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(bookNotFound));
+        final Book bookForUpdate = findById(id);
 
         final Book updatedBook = bookForUpdate.toBuilder()
                 .author(bookUpdateRequest.getAuthor())
@@ -71,11 +70,24 @@ public class BookService {
 
     @Transactional
     public void deleteBook(final String id) {
-        final Book book =
-                bookRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(bookNotFound));
+        final Book book = findById(id);
         bookRepository.delete(book);
-        borrowService.removeBookFromBorrows(book);
+        borrowService.removeBookFromBorrows(id);
+    }
+
+    public Book findById(final String id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(bookNotFound));
+    }
+
+    public void setBooksUnavailable(final List<Book> books) {
+        for (Book item : books) {
+            bookRepository.save(item.toBuilder().isAvailable(false).build());
+        }
+    }
+
+    public List<Book> findAllById(List<String> bookIds){
+        return Lists.newArrayList(bookRepository.findAllById(bookIds));
     }
 
 }

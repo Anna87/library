@@ -21,6 +21,9 @@ import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 
+import static com.library.java.constants.Constants.ROLE_ADMIN;
+import static com.library.java.constants.Constants.ROLE_USER;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/book")
@@ -34,7 +37,7 @@ public class BookController {
         return bookDetailsConverter.convertList(bookService.getAll());
     }
 
-    @Secured(value = {"ROLE_ADMIN"})
+    @Secured(value = {ROLE_ADMIN})
     @PostMapping(path = "/add")
     public BookDetails newBook(
             @RequestPart(value = "bookCreationRequest") final BookCreationRequest bookCreationRequest,
@@ -43,7 +46,7 @@ public class BookController {
         return bookDetailsConverter.convert(bookService.addBook(data, bookCreationRequest));
     }
 
-    @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
+    @Secured(value = {ROLE_USER, ROLE_ADMIN})
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> download(@NotBlank @PathVariable("id") final String id) throws IOException {
         final MultipartFile file = bookService.downloadDigitalBook(id);
@@ -53,8 +56,9 @@ public class BookController {
                 .body(new ByteArrayResource(bytes, file.getName()));
     }
 
-    @Secured(value = {"ROLE_ADMIN"})
+    @Secured(value = {ROLE_ADMIN})
     @PatchMapping("/{id}/edit")
+    @ResponseStatus(HttpStatus.OK)
     public BookDetails editBook(
             @NotBlank @PathVariable("id") final String id,
             @Valid @RequestBody final BookUpdateRequest bookUpdateRequest
@@ -62,7 +66,7 @@ public class BookController {
         return bookDetailsConverter.convert(bookService.editBook(id, bookUpdateRequest));
     }
 
-    @Secured(value = {"ROLE_ADMIN"})
+    @Secured(value = {ROLE_ADMIN})
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}/delete")
     public void deleteBook(@NotBlank @PathVariable("id") final String id) {

@@ -1,14 +1,10 @@
 package com.library.java.services;
 
-import com.google.common.collect.Lists;
 import com.library.java.dto.requests.BorrowCreationRequest;
-import com.library.java.exceptions.NotFoundException;
 import com.library.java.models.Book;
 import com.library.java.models.Borrow;
 import com.library.java.models.Holder;
-import com.library.java.repositories.BookRepository;
 import com.library.java.repositories.BorrowRepository;
-import com.library.java.repositories.HolderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +18,17 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BorrowService {
-    private final String holderNotFound = "Holder not found";
 
     private final BorrowRepository borrowRepository;
 
-    private final HolderRepository holderRepository;
+    private final HolderService holderService;
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
     @Transactional
     public Borrow addBorrow(final BorrowCreationRequest borrowCreationRequest) {
-        final Holder holder = holderRepository.findById(borrowCreationRequest.getHolderId())
-                .orElseThrow(() -> new NotFoundException(holderNotFound));
-        final List<Book> books = Lists.newArrayList(bookRepository.findAllById(borrowCreationRequest.getBookIds()));
+        final Holder holder = holderService.findById(borrowCreationRequest.getHolderId());
+        final List<Book> books = bookService.findAllById(borrowCreationRequest.getBookIds());
 
         final Borrow borrow = borrowRepository.save(Borrow.builder()
                 .books(books)
@@ -42,7 +36,7 @@ public class BorrowService {
                 .expiredDate(new Date(borrowCreationRequest.getExpiredDate()))
                 .build());
 
-        setBooksUnavailable(books);
+        bookService.setBooksUnavailable(books);
         return borrow;
     }
 
@@ -50,19 +44,11 @@ public class BorrowService {
         return borrowRepository.findAll();
     }
 
-    private void setBooksUnavailable(final List<Book> books) {
-        Iterable<String> ids = books.stream().map(Book::getId).collect(Collectors.toList());
-        Iterable<Book> foundBooks = bookRepository.findAllById(ids);
-        for (Book item : foundBooks) {
-            bookRepository.save(item.toBuilder().isAvailable(false).build());
-        }
-    }
-
     public void updateBookInBorrow(final Book updatedBook) {
         if (updatedBook.isAvailable()) {
-            removeBookFromBorrows(updatedBook);
+            removeBookFromBorrows(updatedBook.getId());
         } else {
-            borrowRepository.findByBooksIdIn(updatedBook.getId()).forEach(
+            findBorrowsByBookId(updatedBook.getId()).forEach(
                     borrow -> {
                         borrow.getBooks().forEach(
                                 book -> {
@@ -77,24 +63,37 @@ public class BorrowService {
         }
     }
 
-    public void removeBookFromBorrows(final Book book) {
-        borrowRepository.findByBooksIdIn(book.getId()).forEach(borrow -> {
-            borrow.getBooks().removeIf(currBook -> currBook.getId().equals(book.getId()));
-            if (borrow.getBooks().size() == 0) {
+    public void removeBookFromBorrows(String id) {
+        findBorrowsByBookId(id).forEach(borrow -> {
+            java.util.ArrayList<Book> books = new java.util.ArrayList<>(borrow.getBooks());
+            books.removeIf(currBook -> currBook.getId().equals(id));
+
+            Borrow updatedBorrow = Borrow.builder()
+                    .id(borrow.getId())
+                    .holder(borrow.getHolder())
+                    .books(books)
+                    .expiredDate(borrow.getExpiredDate())
+                    .build();
+            if (updatedBorrow.getBooks().size() == 0) {
                 borrowRepository.delete(borrow);
             } else {
-                borrowRepository.save(borrow);
+                borrowRepository.save(updatedBorrow);
             }
         });
     }
 
-    public void updateHolderInBorrow(final Holder holder) {
-        borrowRepository.findByHolder(holder).forEach(borrow ->
+    public List<Borrow> findBorrowsByBookId(String id){
+        return borrowRepository.findByBooksIdIn(id);
+    }
+
+
+    public void updateHolderInHolder(final Holder holder) {
+        borrowRepository.findByHolderId(holder.getId()).forEach(borrow ->
                 borrowRepository.save(borrow.toBuilder().holder(holder).build()));
     }
 
-    public void deleteHolderInBorrow(final Holder holder) {
-        borrowRepository.findByHolder(holder).forEach(borrowRepository::delete);
+    public void deleteBorrowByHolderId(final String id) {
+        borrowRepository.findByHolderId(id).forEach(borrowRepository::delete);
     }
 
     public List<Borrow> getExpiredBorrow(final Date date) {

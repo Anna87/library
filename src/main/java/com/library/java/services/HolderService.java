@@ -45,18 +45,22 @@ public class HolderService {
 
         final Holder savedHolder =  holderRepository.save(updatedHolder);
 
-        borrowService.updateHolderInBorrow(updatedHolder);
+        borrowService.updateHolderInHolder(updatedHolder);
 
         return savedHolder;
     }
 
     @Transactional
     public void deleteHolder(final String id) {
-        final Holder holder =
-                holderRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException(holderNotFound));
+        final Holder holder = findById(id);
         holderRepository.delete(holder);
-        borrowService.deleteHolderInBorrow(holder);
+        borrowService.deleteBorrowByHolderId(holder.getId());
+    }
+
+    public Holder findById(String id){
+        final Holder holder = holderRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(holderNotFound));
+        return holder;
     }
 
 }

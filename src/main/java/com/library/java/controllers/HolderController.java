@@ -15,7 +15,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-@Secured(value = {"ROLE_ADMIN"})
+import static com.library.java.constants.Constants.ROLE_ADMIN;
+
+@Secured(value = {ROLE_ADMIN})
 @RestController
 @RequestMapping("/holder")
 @RequiredArgsConstructor

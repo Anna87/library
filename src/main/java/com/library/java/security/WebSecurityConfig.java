@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Autowired(required=true)
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     public WebSecurityConfig(){

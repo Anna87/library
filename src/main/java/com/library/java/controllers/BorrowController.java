@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Secured(value = {"ROLE_ADMIN"})
+import static com.library.java.constants.Constants.ROLE_ADMIN;
+
+@Secured(value = {ROLE_ADMIN})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/borrow")

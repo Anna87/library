@@ -1,9 +1,12 @@
 package com.library.java.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +19,6 @@ public class Borrow {
     @Id
     private String id;
     private Holder holder;
-    private List<Book> books;
+    private List<Book> books; // TODO ArrayList
     private Date expiredDate;
 }
