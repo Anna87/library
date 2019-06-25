@@ -13,6 +13,7 @@ public class BorrowDetailsConverter implements GenericConverter<BorrowDetails, B
                 .id(borrow.getId())
                 .books(borrow.getBooks())
                 .holder(borrow.getHolder())
+                .expiredDate(borrow.getExpiredDate())
                 .build();
     }
 }

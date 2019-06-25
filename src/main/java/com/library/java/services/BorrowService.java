@@ -5,7 +5,7 @@ import com.library.java.models.Book;
 import com.library.java.models.Borrow;
 import com.library.java.models.Holder;
 import com.library.java.repositories.BorrowRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,14 +16,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class BorrowService {
 
-    private final BorrowRepository borrowRepository;
+    private BorrowRepository borrowRepository;
 
-    private final HolderService holderService;
+    private HolderService holderService;
 
-    private final BookService bookService;
+    private BookService bookService;
+
+    public BorrowService(BorrowRepository borrowRepository, @Lazy HolderService holderService,@Lazy BookService bookService) {
+        this.borrowRepository = borrowRepository;
+        this.holderService = holderService;
+        this.bookService = bookService;
+    }
 
     @Transactional
     public Borrow addBorrow(final BorrowCreationRequest borrowCreationRequest) {

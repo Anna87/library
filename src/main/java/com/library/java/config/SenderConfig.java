@@ -47,6 +47,7 @@ public class SenderConfig {
         converter.setTypeIdPropertyName("_type");
         Map<String, Class<?>> typeIdMappings = new HashMap<>();
         typeIdMappings.put(NotificationDetails.class.getSimpleName(), NotificationDetails.class);
+        typeIdMappings.put("SendNotificationEvent", NotificationDetails.class);
         converter.setTypeIdMappings(typeIdMappings);
         converter.setObjectMapper(objectMapper);
         return converter;

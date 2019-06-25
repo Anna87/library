@@ -30,7 +30,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ApplicationTest.class})
+@ContextConfiguration(classes = {ApplicationTest.class, CustomAuthenticationProvider.class})
 @Import({WebTestSecurityConfig.class})
 @WebMvcTest(value = BookController.class)
 public class BookControllerTest {
@@ -45,16 +45,13 @@ public class BookControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
-
     @Before
     public void init() {
         RestAssuredMockMvc.mockMvc(mockMvc);
     }
 
     @Test
-    //@WithMockUser("ADMIN")
+    @WithMockUser("ADMIN")
     public void shouldReturnBookDetailsRequestingEditBook() {
         //given
         final String author = "author";
