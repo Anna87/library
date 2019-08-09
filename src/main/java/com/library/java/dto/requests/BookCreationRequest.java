@@ -1,6 +1,7 @@
 package com.library.java.dto.requests;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 
@@ -14,4 +15,5 @@ public class BookCreationRequest {
     private final boolean isAvailable;
     private final boolean hasDigitalFormat;
     private final String fileName;
+
 }
