@@ -7,17 +7,16 @@ import com.library.java.models.Holder;
 import com.library.java.repositories.HolderRepository;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class HolderServiceTest {
 
     private HolderRepository holderRepository = mock(HolderRepository.class);
@@ -31,6 +30,10 @@ public class HolderServiceTest {
 
     @Test
     public void shouldEditHolder() {
+
+        List<String> bikeBrands = Arrays.asList("Giant", "Scott", "Trek", "GT");
+
+
         //given
         final HolderUpdateRequest givenHolderUpdateRequest = HolderUpdateRequest.builder()
                 .firstName("givenFirstName")

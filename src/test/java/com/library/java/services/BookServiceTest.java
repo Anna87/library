@@ -9,10 +9,8 @@ import com.library.java.models.Book;
 import com.library.java.repositories.BookRepository;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,7 +22,6 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class BookServiceTest {
     private BookRepository bookRepository = mock(BookRepository.class);
 
@@ -109,6 +106,7 @@ public class BookServiceTest {
                 .isAvailable(true)
                 .build();
 
+        StringBuilder stringBuilder = new StringBuilder();
         final String givenFileId = "randomFileId";
 
         Mockito.when(bookConverter.convert(givenBookCreationRequest)).thenReturn(givenBook);

@@ -7,13 +7,10 @@ import com.library.java.models.Book;
 import com.library.java.models.Borrow;
 import com.library.java.models.Holder;
 import com.library.java.repositories.BorrowRepository;
-import groovy.lang.Lazy;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +21,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class BorrowServiceTest {
 
     private BorrowRepository borrowRepository = mock(BorrowRepository.class);

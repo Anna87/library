@@ -5,8 +5,8 @@ import com.library.java.dto.requests.BookCreationRequest;
 import com.library.java.dto.requests.BookUpdateRequest;
 import com.library.java.dto.responses.BookDetails;
 import com.library.java.services.BookService;
+import com.library.java.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,7 @@ public class BookController {
     private final BookService bookService;
     private final BookDetailsConverter bookDetailsConverter;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<BookDetails> getAll() {
         return bookDetailsConverter.convertList(bookService.getAll());
@@ -39,6 +40,7 @@ public class BookController {
 
     @Secured(value = {ROLE_ADMIN})
     @PostMapping(path = "/add")
+    @ResponseStatus(HttpStatus.OK)
     public BookDetails newBook(
             @RequestPart(value = "bookCreationRequest") final BookCreationRequest bookCreationRequest,
             @RequestPart(value = "file", required = false) final MultipartFile data
@@ -50,7 +52,7 @@ public class BookController {
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> download(@NotBlank @PathVariable("id") final String id) throws IOException {
         final MultipartFile file = bookService.downloadDigitalBook(id);
-        final byte[] bytes = IOUtils.toByteArray(file.getInputStream());
+        final byte[] bytes = FileUtils.toByteArray(file.getInputStream());
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType()))
                 .body(new ByteArrayResource(bytes, file.getName()));
